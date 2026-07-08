@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CM Suite Compliance · Workflow</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --indigo: #19313B;
+      --indigo-2: #223F4A;
+      --indigo-3: #0F252D;
+      --salmon: #CB896C;
+      --salmon-2: #B8775A;
+      --petalo: #F4E9E2;
+      --petalo-2: #FBF6F2;
+      --fondo: #F7F4F1;
+      --blanco: #FFFFFF;
+      --texto: #19313B;
+      --muted: #697780;
+      --linea: #E8DDD6;
+      --verde: #1E7A5F;
+      --amarillo: #B7791F;
+      --rojo: #B42318;
+      --azul: #1D4E89;
+      --sombra: 0 22px 60px rgba(25, 49, 59, .10);
+      --sombra-suave: 0 10px 28px rgba(25, 49, 59, .08);
+      --radio: 24px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: 'Raleway', sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(203, 137, 108, .16), transparent 28%),
+        linear-gradient(135deg, #fff 0%, var(--fondo) 48%, #fff 100%);
+      color: var(--texto);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 292px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(244, 233, 226, .12), transparent 28%),
+        linear-gradient(180deg, var(--indigo-3), var(--indigo));
+      color: white;
+      overflow: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 8px 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      margin-bottom: 22px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .10);
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .18);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .brand-copy h1 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -.3px;
+    }
+
+    .brand-copy p {
+      margin: 5px 0 0;
+      font-size: 11px;
+      color: rgba(255, 255, 255, .76);
+      font-weight: 500;
+    }
+
+    .nav-group-label {
+      margin: 18px 10px 8px;
+      color: rgba(255, 255, 255, .52);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .menu button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: rgba(255, 255, 255, .86);
+      text-align: left;
+      padding: 13px 14px;
+      border-radius: 17px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      transition: .18s ease;
+    }
+
+    .menu button .icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .08);
+      font-size: 13px;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: rgba(244, 233, 226, .15);
+      color: white;
+      transform: translateX(2px);
+    }
+
+    .menu button.active .icon {
+      background: var(--salmon);
+      color: white;
+    }
+
+    .sidebar-footer {
+      margin-top: 26px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .sidebar-footer strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .sidebar-footer span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .72);
+      line-height: 1.45;
+    }
+
+    main {
+      padding: 26px 34px 40px;
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .title-block h2 {
+      margin: 0;
+      font-size: 30px;
+      color: var(--indigo);
+      font-weight: 900;
+      letter-spacing: -.7px;
+    }
+
+    .title-block p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--linea);
+      box-shadow: var(--sombra-suave);
+      color: var(--indigo);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      background: var(--verde);
+      border-radius: 999px;
+      box-shadow: 0 0 0 4px rgba(30, 122, 95, .12);
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .ghost-btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 11px 15px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .primary-btn {
+      background: var(--salmon);
+      color: white;
+      box-shadow: 0 12px 26px rgba(203, 137, 108, .26);
+    }
+
+    .primary-btn:hover {
+      background: var(--salmon-2);
+      transform: translateY(-1px)
+    }
+
+    .secondary-btn {
+      background: var(--petalo);
+      color: var(--indigo);
+      border: 1px solid var(--linea);
+    }
+
+    .ghost-btn {
+      background: white;
+      color: var(--indigo);
+      border: 1px solid var(--linea);
+    }
+
+    .hero-banner {
+      background:
+        linear-gradient(135deg, rgba(25, 49, 59, .96), rgba(34, 63, 74, .92)),
+        radial-gradient(circle at top right, rgba(203, 137, 108, .32), transparent 30%);
+      border-radius: 30px;
+      color: white;
+      padding: 28px;
+      box-shadow: var(--sombra);
+      display: grid;
+      grid-template-columns: 1.5fr .9fr;
+      gap: 18px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-banner:after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(244, 233, 226, .22);
+      transform: rotate(45deg);
+      right: -95px;
+      top: -58px;
+    }
+
+    .hero-banner h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -.4px;
+    }
+
+    .hero-banner p {
+      margin: 9px 0 0;
+      color: rgba(255, 255, 255, .76);
+      line-height: 1.5;
+      font-size: 14px;
+      max-width: 760px;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      align-content: center;
+      z-index: 1;
+    }
+
+    .mini-metric {
+      background: rgba(255, 255, 255, .11);
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .mini-metric span {
+      display: block;
+      color: rgba(255, 255, 255, .66);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .mini-metric strong {
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: rgba(255, 255, 255, .86);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--linea);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--sombra-suave);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card:before {
+      content: "";
+      position: absolute;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: rgba(203, 137, 108, .13);
+      right: -24px;
+      top: -24px;
+    }
+
+    .kpi-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+      margin-bottom: 12px;
+    }
+
+    .kpi-card strong {
+      color: var(--indigo);
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .kpi-card small {
+      display: block;
+      margin-top: 10px;
+      color: var(--salmon);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(340px, .75fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid var(--linea);
+      border-radius: 26px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--linea);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      color: var(--indigo);
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: -.25px;
+    }
+
+    .panel-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 550;
+    }
+
+    .table-wrap {
+      overflow: auto
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th,
+    td {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--linea);
+      text-align: left;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 11px;
+      font-weight: 900;
+      background: rgba(244, 233, 226, .34);
+    }
+
+    td strong {
+      font-weight: 900;
+      color: var(--indigo)
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .b-pending {
+      background: #F3E7D6;
+      color: #8A571B
+    }
+
+    .b-progress {
+      background: #EAF1F3;
+      color: #19313B
+    }
+
+    .b-ok {
+      background: #E9F7F2;
+      color: #116149
+    }
+
+    .b-danger {
+      background: #FCEBE8;
+      color: #9F2B20
+    }
+
+    .b-info {
+      background: #E8EEF5;
+      color: #1D4E89
+    }
+
+    .b-soft {
+      background: var(--petalo);
+      color: var(--indigo)
+    }
+
+    .progress {
+      height: 9px;
+      background: #EFE5DE;
+      border-radius: 999px;
+      overflow: hidden;
+      width: 120px;
+    }
+
+    .progress div {
+      height: 100%;
+      background: linear-gradient(90deg, var(--salmon), #E0A487);
+      border-radius: 999px;
+    }
+
+    .activity {
+      padding: 18px 22px 22px;
+    }
+
+    .activity-item {
+      position: relative;
+      padding: 0 0 20px 24px;
+      border-left: 2px solid var(--linea);
+    }
+
+    .activity-item:last-child {
+      padding-bottom: 0
+    }
+
+    .activity-item:before {
+      content: "";
+      position: absolute;
+      left: -7px;
+      top: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--salmon);
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px rgba(203, 137, 108, .22);
+    }
+
+    .activity-item strong {
+      display: block;
+      font-size: 13px;
+      color: var(--indigo);
+      margin-bottom: 4px;
+      font-weight: 900;
+    }
+
+    .activity-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .view {
+      display: none
+    }
+
+    .view.active {
+      display: block
+    }
+
+    .module-empty {
+      background: white;
+      border: 1px solid var(--linea);
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: var(--sombra);
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .module-empty .empty-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      background: var(--petalo);
+      color: var(--salmon);
+      font-size: 30px;
+    }
+
+    .module-empty h3 {
+      margin: 0 0 8px;
+      color: var(--indigo);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .module-empty p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.5;
+    }
+
+    .expediente-view {
+      display: none;
+    }
+
+    .expediente-view.active {
+      display: block
+    }
+
+    .exp-hero {
+      background: white;
+      border: 1px solid var(--linea);
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: var(--sombra);
+      margin-bottom: 20px;
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1.45fr repeat(4, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .exp-title small,
+    .exp-meta small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+
+    .exp-title h2 {
+      margin: 0;
+      color: var(--indigo);
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -.35px;
+    }
+
+    .exp-title p {
+      margin: 7px 0 0;
+      color: var(--salmon);
+      font-weight: 900;
+    }
+
+    .exp-meta strong {
+      color: var(--indigo);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .step {
+      border: 1px solid var(--linea);
+      background: #FCFAF8;
+      border-radius: 17px;
+      padding: 13px 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .step.done {
+      background: #E9F7F2;
+      border-color: #BFE4D8;
+      color: #116149;
+    }
+
+    .step.current {
+      background: var(--petalo);
+      border-color: #E5C8B9;
+      color: var(--salmon-2);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .tabs button {
+      border: 1px solid var(--linea);
+      background: white;
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+      color: var(--indigo);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .tabs button.active {
+      background: var(--indigo);
+      color: white;
+      border-color: var(--indigo);
+    }
+
+    .tab-content {
+      background: white;
+      border: 1px solid var(--linea);
+      border-radius: 26px;
+      box-shadow: var(--sombra);
+      padding: 24px;
+      min-height: 260px;
+      overflow: auto;
+    }
+
+    .tab-content h3 {
+      margin: 0 0 15px;
+      color: var(--indigo);
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .detail-box {
+      background: #FCFAF8;
+      border: 1px solid var(--linea);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .detail-box small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .detail-box strong {
+      color: var(--indigo);
+      font-size: 14px;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #FCFAF8;
+      border: 1px solid var(--linea);
+      border-radius: 18px;
+      padding: 16px;
+      color: #2C3F47;
+      font-size: 12px;
+      line-height: 1.55;
+      max-height: 460px;
+      overflow: auto;
+    }
+
+    .doc-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .doc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border: 1px solid var(--linea);
+      background: #FCFAF8;
+      border-radius: 16px;
+      font-size: 13px;
+      color: var(--indigo);
+      font-weight: 750;
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--indigo);
+      color: white;
+      box-shadow: var(--sombra);
+      z-index: 99;
+      display: none;
+      max-width: 360px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .toast.show {
+      display: block
+    }
+
+    .workflow-toolbar {
+
+      display: flex;
+
+      gap: 12px;
+
+      padding: 18px;
+
+      flex-wrap: wrap;
+
+      align-items: center;
+
+      background: #FCFAF8;
+
+      border-bottom: 1px solid var(--linea);
+
+    }
+
+    .workflow-toolbar input {
+
+      flex: 1;
+
+      min-width: 320px;
+
+      padding: 12px 16px;
+
+      border-radius: 14px;
+
+      border: 1px solid var(--linea);
+
+      font-size: 13px;
+
+    }
+
+    .workflow-toolbar select {
+
+      padding: 12px;
+
+      border-radius: 14px;
+
+      border: 1px solid var(--linea);
+
+      background: white;
+
+      font-size: 13px;
+
+    }
+
+    @media(max-width:1220px) {
+      .cards {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-banner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:880px) {
+      .app {
+        grid-template-columns: 1fr
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto
+      }
+
+      main {
+        padding: 22px 18px
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column
+      }
+
+      .cards {
+        grid-template-columns: 1fr
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr
+      }
+
+      .exp-grid {
+        grid-template-columns: 1fr
+      }
+
+      .stepper {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .empty-expediente {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 80px 40px;
+
+      text-align: center;
+
+    }
+
+    .empty-icon {
+
+      font-size: 70px;
+
+      margin-bottom: 20px;
+
+    }
+
+    .empty-expediente h2 {
+
+      margin-bottom: 10px;
+
+      font-size: 30px;
+
+      font-weight: 800;
+
+      color: #19313B;
+
+    }
+
+    .empty-expediente p {
+
+      max-width: 650px;
+
+      line-height: 1.8;
+
+      color: #5d6872;
+
+    }
+
+    .expediente-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 25px;
+
+      padding-bottom: 20px;
+
+      border-bottom: 1px solid var(--linea);
+
+    }
+
+    .exp-radicado {
+
+      font-size: 13px;
+
+      color: #777;
+
+    }
+
+    .exp-nombre {
+
+      font-size: 30px;
+
+      font-weight: 800;
+
+      color: #19313B;
+
+      margin-top: 5px;
+
+    }
+
+    .exp-subtitulo {
+
+      margin-top: 8px;
+
+      color: #666;
+
+    }
+
+    .estado-badge {
+
+      background: #19313B;
+
+      color: white;
+
+      padding: 12px 22px;
+
+      border-radius: 40px;
+
+      font-weight: 700;
+
+    }
+
+    .tabs-expediente {
+
+      display: flex;
+
+      gap: 10px;
+
+      margin-bottom: 25px;
+
+      flex-wrap: wrap;
+
+    }
+
+    .tab-exp {
+
+      padding: 12px 18px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      background: #F4E9E2;
+
+      cursor: pointer;
+
+      font-weight: 700;
+
+      color: #19313B;
+
+    }
+
+    .tab-exp.active {
+
+      background: #CB896C;
+
+      color: white;
+
+    }
+
+    .expediente-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+
+      gap: 20px;
+
+    }
+
+    .card-exp {
+
+      background: white;
+
+      border-radius: 18px;
+
+      padding: 25px;
+
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
+
+    }
+
+    .card-exp h3 {
+
+      margin-bottom: 20px;
+
+      color: #19313B;
+
+    }
+
+    .tabla-info {
+
+      width: 100%;
+
+      border-collapse: collapse;
+
+    }
+
+    .tabla-info td {
+
+      padding: 12px;
+
+      border-bottom: 1px solid #eee;
+
+    }
+
+    /*=============================
+MODAL NUEVO EXPEDIENTE
+==============================*/
+
+    .modal-overlay {
+
+      position: fixed;
+
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background: rgba(10, 20, 30, .45);
+
+      display: none;
+
+      justify-content: center;
+
+      align-items: center;
+
+      backdrop-filter: blur(6px);
+
+      z-index: 9999;
+
+    }
+
+    .modal-expediente {
+
+      width: 900px;
+
+      max-width: 92%;
+
+      background: white;
+
+      border-radius: 22px;
+
+      overflow: hidden;
+
+      box-shadow: 0 35px 70px rgba(0, 0, 0, .25);
+
+      animation: modalIn .25s ease;
+
+    }
+
+    @keyframes modalIn {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(30px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: none;
+
+      }
+
+    }
+
+    .modal-header {
+
+      padding: 28px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      border-bottom: 1px solid #ececec;
+
+    }
+
+    .modal-header h2 {
+
+      margin: 0;
+
+      font-size: 30px;
+
+    }
+
+    .modal-header span {
+
+      color: #777;
+
+    }
+
+    .cerrar-modal {
+
+      background: none;
+
+      border: none;
+
+      font-size: 28px;
+
+      cursor: pointer;
+
+    }
+
+    .modal-body {
+
+      padding: 28px;
+
+    }
+
+    .form-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 20px;
+
+    }
+
+    .campo {
+
+      display: flex;
+
+      flex-direction: column;
+
+    }
+
+    .campo label {
+
+      font-weight: 700;
+
+      margin-bottom: 8px;
+
+    }
+
+    .campo input,
+    .campo select,
+    .campo textarea {
+
+      padding: 14px;
+
+      border: 1px solid #d7d7d7;
+
+      border-radius: 12px;
+
+      font-size: 15px;
+
+      font-family: Raleway, sans-serif;
+
+    }
+
+    .campo-2 {
+
+      grid-column: span 2;
+
+    }
+
+    .modal-footer {
+
+      padding: 25px;
+
+      display: flex;
+
+      justify-content: flex-end;
+
+      gap: 15px;
+
+      border-top: 1px solid #ececec;
+
+    }
+
+    .btn-principal {
+
+      background: #CB896C;
+
+      color: white;
+
+      border: none;
+
+      padding: 14px 30px;
+
+      border-radius: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+    }
+
+    .btn-secundario {
+
+      background: #F4E9E2;
+
+      color: #19313B;
+
+      border: none;
+
+      padding: 14px 30px;
+
+      border-radius: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="Logo.png" alt="Consultores Martín"
+            onerror="this.style.display='none'; this.parentElement.textContent='CM';">
+        </div>
+        <div class="brand-copy">
+          <h1>CM Suite Compliance</h1>
+          <p>Gestión integral de contrapartes</p>
+        </div>
+      </div>
+
+      <div class="nav-group-label">Principal</div>
+      <nav class="menu">
+        <button class="active" onclick="showView('dashboard', this)"><span class="icon">⌂</span>Inicio</button>
+        <button onclick="showView('expedientes', this)"><span class="icon">□</span>Expedientes</button>
+        <button onclick="showView('asignaciones', this)"><span class="icon">👥</span>Asignaciones</button>
+        <button onclick="showView('consultas', this)"><span class="icon">⌕</span>Consultas</button>
+        <button onclick="showView('riesgo', this)"><span class="icon">⚖</span>Riesgo</button>
+        <button onclick="showView('oficial', this)"><span class="icon">◈</span>Oficial Cumplimiento</button>
+      </nav>
+
+      <div class="nav-group-label">Seguimiento</div>
+      <nav class="menu">
+        <button onclick="showView('actualizaciones', this)"><span class="icon">◷</span>Actualizaciones</button>
+        <button onclick="showView('alertas', this)"><span class="icon">!</span>Alertas</button>
+        <button onclick="showView('reportes', this)"><span class="icon">▦</span>Reportes</button>
+        <button onclick="showView('configuracion', this)"><span class="icon">⚙</span>Configuración</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <strong>Ambiente DEV</strong>
+        <span>Conectado a ContrapartesWorkflow y CM-Workflow-API. Producción permanece intacta.</span>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div class="title-block">
+          <h2 id="tituloVista">Dashboard principal</h2>
+          <p id="subtituloVista">Gestión Integral del Proceso de Vinculación · Ambiente de desarrollo</p>
+        </div>
+        <div class="header-actions">
+          <button class="ghost-btn" onclick="cargarContrapartes()">Actualizar</button>
+          <div class="chip"><span class="dot"></span>Héctor Julián Martín Peña · Super Admin</div>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view active">
+        <div class="hero-banner">
+          <div>
+            <h3>Centro de control de contrapartes</h3>
+            <p>Administra el ciclo completo del tercero: radicación, asignación interna, revisión documental, consultas
+              en listas, calificación de riesgo, decisión del Oficial de Cumplimiento y próxima actualización
+              documental.</p>
+            <div class="actions">
+              <button class="primary-btn" onclick="showViewByName('expedientes')">Ver expedientes</button>
+              <button class="secondary-btn" onclick="cargarContrapartes()">Sincronizar AWS</button>
+            </div>
+          </div>
+          <div class="hero-metrics">
+            <div class="mini-metric"><span>Ambiente</span><strong>DEV</strong></div>
+            <div class="mini-metric"><span>API</span><strong>OK</strong></div>
+            <div class="mini-metric"><span>Versión</span><strong>v1.0</strong></div>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="kpi-card"><span>Pendientes asignación</span><strong id="kpiPendientes">0</strong><small>Radicados
+              nuevos</small></div>
+          <div class="kpi-card"><span>Revisión documental</span><strong id="kpiRevision">0</strong><small>Gestión
+              asistente</small></div>
+          <div class="kpi-card"><span>Pendientes Oficial</span><strong id="kpiOficial">0</strong><small>Decisión
+              requerida</small></div>
+          <div class="kpi-card"><span>Aprobados</span><strong id="kpiAprobados">0</strong><small>Procesos
+              cerrados</small></div>
+          <div class="kpi-card"><span>Próximos actualizar</span><strong id="kpiActualizar">0</strong><small>Alertas
+              activas</small></div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Expedientes recientes</h3>
+                <p>Información tomada desde DynamoDB · ContrapartesWorkflow</p>
+              </div>
+              <button class="secondary-btn" onclick="cargarContrapartes()">Actualizar</button>
+            </div>
+            <div class="workflow-toolbar">
+
+              <input id="txtBuscar" type="text" placeholder="🔍 Buscar por radicado, NIT o nombre..."
+                onkeyup="filtrarExpedientes()">
+
+              <select id="fEstado" onchange="filtrarExpedientes()">
+                <option value="">Todos los estados</option>
+                <option>RADICADO</option>
+                <option>PENDIENTE_ASIGNACION</option>
+                <option>REVISION_DOCUMENTAL</option>
+                <option>ESCALADO_OFICIAL</option>
+                <option>APROBADO</option>
+                <option>RECHAZADO</option>
+              </select>
+
+              <select id="fTipo" onchange="filtrarExpedientes()">
+                <option value="">Todos</option>
+                <option>Cliente</option>
+                <option>Proveedor</option>
+                <option>Accionista</option>
+              </select>
+
+              <button class="primary-btn" onclick="toast('Próxima fase: creación manual de expediente.')">
+
+                + Nuevo Expediente
+
+              </button>
+
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Radicado</th>
+                    <th>Tercero</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Avance</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaExpedientes">
+                  <tr>
+                    <td colspan="6">Cargando expedientes...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Actividad reciente</h3>
+                <p>Cronología del flujo operativo</p>
+              </div>
+            </div>
+            <div class="activity" id="actividadReciente">
+              <div class="activity-item">
+                <strong>Sistema iniciado</strong>
+                <span>Ambiente Workflow conectado.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="expedientesView" class="view">
+        <div id="expedienteListPanel" class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Bandeja de expedientes</h3>
+              <p>Todos los terceros radicados en ambiente Workflow.</p>
+            </div>
+            <button class="primary-btn" onclick="cargarContrapartes()">Actualizar bandeja</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Radicado</th>
+                  <th>Tercero</th>
+                  <th>Identificación</th>
+                  <th>Tipo</th>
+                  <th>Estado proceso</th>
+                  <th>Responsables</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaExpedientesCompleta">
+                <tr>
+                  <td colspan="7">Cargando expedientes...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="expedienteView" class="expediente-view">
+          <div class="exp-hero">
+            <div class="exp-grid">
+              <div class="exp-title">
+                <small>Expediente digital</small>
+                <h2 id="expNombre">Sin expediente seleccionado</h2>
+                <p id="expRadicado">---</p>
+              </div>
+              <div class="exp-meta"><small>Tipo</small><strong id="expTipo">---</strong></div>
+              <div class="exp-meta"><small>Estado</small><span id="expEstado" class="badge b-soft">---</span></div>
+              <div class="exp-meta"><small>Riesgo</small><strong id="expRiesgo">Pendiente</strong></div>
+              <div class="exp-meta"><small>Próxima actualización</small><strong id="expActualizacion">No
+                  programada</strong></div>
+            </div>
+
+            <div class="stepper" id="stepper">
+              <div class="step done">Formulario</div>
+              <div class="step current">Documentos</div>
+              <div class="step">Consultas</div>
+              <div class="step">Riesgo</div>
+              <div class="step">Oficial</div>
+              <div class="step">Actualización</div>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <button class="active" onclick="showTab('resumen', this)">Resumen</button>
+            <button onclick="showTab('formulario', this)">Formulario</button>
+            <button onclick="showTab('documentos', this)">Documentos</button>
+            <button onclick="showTab('consultas', this)">Consultas</button>
+            <button onclick="showTab('riesgoTab', this)">Riesgo</button>
+            <button onclick="showTab('oficialTab', this)">Oficial</button>
+            <button onclick="showTab('actualizacionTab', this)">Actualización</button>
+            <button onclick="showTab('historial', this)">Historial</button>
+          </div>
+
+          <div class="tab-content" id="tabContent">
+
+            <div class="empty-expediente">
+
+              <div class="empty-icon">📂</div>
+
+              <h2>Expediente Digital</h2>
+
+              <p>
+
+                Seleccione un expediente desde la tabla para visualizar toda la información
+                del tercero, documentos, consultas, riesgo, decisiones y trazabilidad.
+
+              </p>
+
+            </div>
+
+          </div>
+      </section>
+
+      <section id="asignacionesView" class="view"></section>
+      <section id="consultasView" class="view"></section>
+      <section id="riesgoView" class="view"></section>
+      <section id="oficialView" class="view"></section>
+      <section id="actualizacionesView" class="view"></section>
+      <section id="alertasView" class="view"></section>
+      <section id="reportesView" class="view"></section>
+      <section id="configuracionView" class="view"></section>
+      <!-- ===========================
+     MODAL NUEVO EXPEDIENTE
+=========================== -->
+
+      <div id="modalNuevoExpediente" class="modal-overlay">
+
+        <div class="modal-expediente">
+
+          <div class="modal-header">
+
+            <div>
+              <h2>Nuevo Expediente</h2>
+              <span>Registro inicial de contraparte</span>
+            </div>
+
+            <button class="cerrar-modal" onclick="cerrarNuevoExpediente()">✕</button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-grid">
+
+              <div class="campo">
+                <label>Tipo de contraparte</label>
+
+                <select id="tipoContraparte">
+
+                  <option value="">Seleccione...</option>
+
+                  <option>Cliente</option>
+                  <option>Proveedor</option>
+                  <option>Accionista</option>
+
+                </select>
+
+              </div>
+
+              <div class="campo">
+
+                <label>Proceso</label>
+
+                <select id="tipoProceso">
+
+                  <option>Vinculación</option>
+                  <option>Actualización</option>
+
+                </select>
+
+              </div>
+
+              <div class="campo">
+
+                <label>Persona</label>
+
+                <select id="tipoPersona">
+
+                  <option>Persona Natural</option>
+                  <option>Persona Jurídica</option>
+
+                </select>
+
+              </div>
+
+              <div class="campo">
+
+                <label>Tipo documento</label>
+
+                <select id="tipoDocumento">
+
+                  <option>NIT</option>
+                  <option>Cédula</option>
+                  <option>CE</option>
+                  <option>Pasaporte</option>
+
+                </select>
+
+              </div>
+
+              <div class="campo campo-2">
+
+                <label>Nombre / Razón Social</label>
+
+                <input id="nombre" type="text">
+
+              </div>
+
+              <div class="campo">
+
+                <label>Número documento</label>
+
+                <input id="numeroDocumento" type="text">
+
+              </div>
+
+              <div class="campo">
+
+                <label>Correo</label>
+
+                <input id="correo" type="email">
+
+              </div>
+
+              <div class="campo">
+
+                <label>Celular</label>
+
+                <input id="celular" type="text">
+
+              </div>
+
+              <div class="campo">
+
+                <label>País</label>
+
+                <input value="Colombia">
+
+              </div>
+
+              <div class="campo">
+
+                <label>Ciudad</label>
+
+                <input>
+
+              </div>
+
+              <div class="campo campo-2">
+
+                <label>Observaciones</label>
+
+                <textarea rows="5"></textarea>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+
+            <button class="btn-secundario" onclick="cerrarNuevoExpediente()">
+
+              Cancelar
+
+            </button>
+
+            <button class="btn-principal">
+
+              Guardar Expediente
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const API_URL = "https://iu71sh9atk.execute-api.us-east-2.amazonaws.com/dev";
+    let expedientes = [];
+    let expedienteActual = null;
+
+    const moduleInfo = {
+      asignaciones: {
+        title: 'Asignaciones',
+        icon: '👥',
+        text: 'Aquí se gestionará la asignación del comercial, área responsable, asistente y Oficial de Cumplimiento por expediente.'
+      },
+      consultas: {
+        title: 'Consultas en listas',
+        icon: '⌕',
+        text: 'Módulo para cargar consultas de persona natural, empresa, representantes legales, accionistas, beneficiarios finales y terceros relacionados.'
+      },
+      riesgo: {
+        title: 'Calificación de riesgo',
+        icon: '⚖',
+        text: 'Aquí se cargará la calificación de riesgo manual en PDF y luego podremos automatizar reglas según SAGRILAFT/PTEE.'
+      },
+      oficial: {
+        title: 'Oficial de Cumplimiento',
+        icon: '◈',
+        text: 'Bandeja de revisión del Oficial: aprobar, rechazar, solicitar ajustes o pedir debida diligencia intensificada.'
+      },
+      actualizaciones: {
+        title: 'Actualizaciones documentales',
+        icon: '◷',
+        text: 'Control de fechas de próxima actualización según nivel de riesgo final y alertas de vencimiento.'
+      },
+      alertas: {
+        title: 'Alertas',
+        icon: '!',
+        text: 'Centro de notificaciones por vencimientos, expedientes detenidos, devoluciones y tareas pendientes.'
+      },
+      reportes: {
+        title: 'Reportes',
+        icon: '▦',
+        text: 'Indicadores por comercial, asistente, Oficial, tipo de tercero, riesgo, estado del proceso y tiempos de atención.'
+      },
+      configuracion: {
+        title: 'Configuración',
+        icon: '⚙',
+        text: 'Parámetros del sistema: usuarios, roles, permisos, áreas, flujos, tiempos, documentos requeridos y reglas.'
+      }
+    };
+
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3600);
+    }
+
+    function showViewByName(view) {
+      const btn = Array.from(document.querySelectorAll('.menu button')).find(b => b.textContent.toLowerCase().includes(view === 'expedientes' ? 'expedientes' : view));
+      showView(view, btn || document.querySelector('.menu button'));
+    }
+
+    function showView(view, btn) {
+      document.querySelectorAll('.menu button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const viewEl = document.getElementById(view + 'View');
+      if (viewEl) viewEl.classList.add('active');
+
+      const titles = {
+        dashboard: ['Dashboard principal', 'Gestión Integral del Proceso de Vinculación · Ambiente de desarrollo'],
+        expedientes: ['Expedientes digitales', 'Bandeja única de terceros, documentos, consultas, riesgo y decisión oficial'],
+        asignaciones: ['Asignaciones', 'Responsables internos, comerciales, asistentes y áreas propietarias'],
+        consultas: ['Consultas en listas', 'Carga, control y trazabilidad de verificaciones en listas'],
+        riesgo: ['Calificación de riesgo', 'Gestión manual y futura automatización del scoring de terceros'],
+        oficial: ['Oficial de Cumplimiento', 'Revisión final, aprobación, rechazo y debida diligencia intensificada'],
+        actualizaciones: ['Actualizaciones documentales', 'Control de vencimientos y renovación según nivel de riesgo'],
+        alertas: ['Alertas', 'Notificaciones operativas y vencimientos próximos'],
+        reportes: ['Reportes', 'Indicadores gerenciales y trazabilidad del proceso'],
+        configuracion: ['Configuración', 'Parámetros, roles, usuarios y reglas de la Suite']
+      };
+
+      document.getElementById('tituloVista').textContent = (titles[view] || ['CM Suite Compliance'])[0];
+      document.getElementById('subtituloVista').textContent = (titles[view] || ['', ''])[1];
+
+      if (moduleInfo[view]) {
+        viewEl.innerHTML = `
+          <div class="module-empty">
+            <div>
+              <div class="empty-icon">${moduleInfo[view].icon}</div>
+              <h3>${moduleInfo[view].title}</h3>
+              <p>${moduleInfo[view].text}</p>
+              <div class="actions" style="justify-content:center;">
+                <button class="primary-btn" onclick="toast('Este módulo se conectará en la siguiente fase.')">Próxima fase</button>
+                <button class="secondary-btn" onclick="showViewByName('expedientes')">Ver expedientes</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (view === 'expedientes') renderTablaCompleta();
+    }
+
+    function badgeEstado(estado) {
+      const e = estado || 'RADICADO';
+      let clase = 'b-soft';
+      if (e.includes('RADICADO') || e.includes('ASIGNADO')) clase = 'b-info';
+      if (e.includes('REVISION') || e.includes('OFICIAL') || e.includes('RIESGO')) clase = 'b-pending';
+      if (e.includes('APROBADO')) clase = 'b-ok';
+      if (e.includes('RECHAZADO') || e.includes('DEVUELTO')) clase = 'b-danger';
+      return `<span class="badge ${clase}">${e}</span>`;
+    }
+
+    function avanceExpediente(item) {
+      let avance = 15;
+      if (item.workflow?.revisionDocumental?.estado === 'OK') avance += 20;
+      if (item.workflow?.consultasListas?.estado === 'CARGADAS') avance += 20;
+      if (item.workflow?.calificacionRiesgo?.estado === 'CARGADA') avance += 20;
+      if (item.workflow?.decisionOficial?.decision === 'APROBADO') avance = 100;
+      return Math.min(avance, 100);
+    }
+
+    async function cargarContrapartes() {
+      document.getElementById('tablaExpedientes').innerHTML = `<tr><td colspan="6">Consultando expedientes...</td></tr>`;
+      const fullTable = document.getElementById('tablaExpedientesCompleta');
+      if (fullTable) fullTable.innerHTML = `<tr><td colspan="7">Consultando expedientes...</td></tr>`;
+
+      try {
+        const res = await fetch(API_URL + "/workflow", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ accion: "consultarContrapartes" })
+        });
+
+        if (!res.ok) {
+          throw new Error("Respuesta API " + res.status);
+        }
+
+        const data = await res.json();
+        expedientes = data.contrapartes || [];
+        renderTabla();
+        renderTablaCompleta();
+        renderKpis();
+        renderActividad();
+        toast('Información actualizada desde AWS.');
+
+      } catch (error) {
+        document.getElementById('tablaExpedientes').innerHTML = `<tr><td colspan="6">Error consultando API: ${error.message}. Revisa CORS en API Gateway.</td></tr>`;
+        if (fullTable) fullTable.innerHTML = `<tr><td colspan="7">Error consultando API: ${error.message}</td></tr>`;
+        console.error(error);
+      }
+    }
+
+    function renderTabla() {
+      const tbody = document.getElementById('tablaExpedientes');
+      if (!tbody) return;
+
+      if (!expedientes.length) {
+        tbody.innerHTML = `<tr><td colspan="6">No hay expedientes todavía en ContrapartesWorkflow.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = expedientes.slice(0, 8).map(item => {
+        const avance = avanceExpediente(item);
+        return `
+          <tr>
+            <td><strong>${item.radicado || ''}</strong></td>
+            <td>${item.nombreORazonSocial || 'Sin nombre'}</td>
+            <td>${item.tipoContraparte || item.tipoPersona || '-'}</td>
+            <td>${badgeEstado(item.estadoProceso)}</td>
+            <td><div class="progress"><div style="width:${avance}%"></div></div></td>
+            <td><button class="secondary-btn" onclick="abrirExpediente('${item.radicado}')">Abrir</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderTablaCompleta() {
+      const tbody = document.getElementById('tablaExpedientesCompleta');
+      if (!tbody) return;
+
+      if (!expedientes.length) {
+        tbody.innerHTML = `<tr><td colspan="7">No hay expedientes todavía en ContrapartesWorkflow.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = expedientes.map(item => {
+        const asistente = item.responsables?.asistenteAsignado?.nombre || 'Sin asistente';
+        const comercial = item.responsables?.comercialAsignado?.nombre || item.responsables?.areaResponsable || 'Sin responsable';
+        return `
+          <tr>
+            <td><strong>${item.radicado || ''}</strong></td>
+            <td>${item.nombreORazonSocial || 'Sin nombre'}</td>
+            <td>${item.tipoIdentificacion || ''} ${item.numeroIdentificacion || ''}</td>
+            <td>${item.tipoContraparte || item.tipoPersona || '-'}</td>
+            <td>${badgeEstado(item.estadoProceso)}</td>
+            <td>${comercial}<br><small>${asistente}</small></td>
+            <td><button class="primary-btn" onclick="abrirExpediente('${item.radicado}')">Abrir expediente</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderKpis() {
+      document.getElementById('kpiPendientes').textContent =
+        expedientes.filter(x => x.estadoProceso === 'RADICADO' || x.estadoProceso === 'PENDIENTE_ASIGNACION').length;
+      document.getElementById('kpiRevision').textContent =
+        expedientes.filter(x => String(x.estadoProceso || '').includes('REVISION')).length;
+      document.getElementById('kpiOficial').textContent =
+        expedientes.filter(x => x.estadoProceso === 'ESCALADO_OFICIAL').length;
+      document.getElementById('kpiAprobados').textContent =
+        expedientes.filter(x => x.estadoProceso === 'APROBADO').length;
+      document.getElementById('kpiActualizar').textContent =
+        expedientes.filter(x => x.alertas?.estadoActualizacion === 'PROGRAMADA').length;
+    }
+
+    function renderActividad() {
+      const box = document.getElementById('actividadReciente');
+      const eventos = expedientes.flatMap(e => (e.historialFlujo || []).map(h => ({
+        ...h,
+        radicado: e.radicado,
+        tercero: e.nombreORazonSocial
+      }))).sort((a, b) => String(b.fecha || '').localeCompare(String(a.fecha || ''))).slice(0, 7);
+
+      if (!eventos.length) {
+        box.innerHTML = `<div class="activity-item"><strong>Sistema iniciado</strong><span>No hay actividad registrada todavía.</span></div>`;
+        return;
+      }
+
+      box.innerHTML = eventos.map(h => `
+        <div class="activity-item">
+          <strong>${h.accion || 'Evento'} · ${h.radicado || ''}</strong>
+          <span>${h.fecha || ''}<br>${h.usuario || ''} · ${h.observacion || h.tercero || ''}</span>
+        </div>
+      `).join('');
+    }
+
+    function abrirExpediente(radicado) {
+
+      const expediente = expedientes.find(e => e.radicado === radicado);
+
+      if (!expediente) {
+        toast("No se encontró el expediente.");
+        return;
+      }
+
+      showView("expedientes");
+
+      document.getElementById("tabContent").innerHTML = `
+
+<div class="expediente-header">
+
+    <div>
+
+        <div class="exp-radicado">${expediente.radicado}</div>
+
+        <div class="exp-nombre">
+
+            ${expediente.nombreORazonSocial}
+
+        </div>
+
+        <div class="exp-subtitulo">
+
+            ${expediente.tipoContraparte} ·
+            ${expediente.tipoIdentificacion}
+            ${expediente.numeroIdentificacion}
+
+        </div>
+
+    </div>
+
+    <div class="estado-badge">
+
+        ${expediente.estadoProceso}
+
+    </div>
+
+</div>
+
+
+<div class="tabs-expediente">
+
+<button class="tab-exp active">Información</button>
+
+<button class="tab-exp">Documentos</button>
+
+<button class="tab-exp">Consultas</button>
+
+<button class="tab-exp">Riesgo</button>
+
+<button class="tab-exp">Oficial</button>
+
+<button class="tab-exp">Historial</button>
+
+</div>
+
+
+<div class="expediente-grid">
+
+<div class="card-exp">
+
+<h3>Información General</h3>
+
+<table class="tabla-info">
+
+<tr>
+
+<td><strong>Tipo de contraparte</strong></td>
+
+<td>${expediente.tipoContraparte}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Nombre</strong></td>
+
+<td>${expediente.nombreORazonSocial}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Identificación</strong></td>
+
+<td>${expediente.tipoIdentificacion} ${expediente.numeroIdentificacion}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Correo</strong></td>
+
+<td>${expediente.correoElectronico || "-"}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Teléfono</strong></td>
+
+<td>${expediente.telefonoCelular || "-"}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Fecha Radicación</strong></td>
+
+<td>${formatoFecha(expediente.fechaRadicacion)}</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="card-exp">
+
+<h3>Responsables</h3>
+
+<table class="tabla-info">
+
+<tr>
+
+<td><strong>Comercial</strong></td>
+
+<td>${expediente.responsables?.comercialAsignado?.nombre || "-"}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Asistente</strong></td>
+
+<td>${expediente.responsables?.asistenteAsignado?.nombre || "-"}</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Oficial</strong></td>
+
+<td>${expediente.responsables?.oficialCumplimiento?.nombre || "-"}</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+`;
+
+    }
+
+    function volverBandeja() {
+      document.getElementById('expedienteListPanel').style.display = 'block';
+      document.getElementById('expedienteView').classList.remove('active');
+      expedienteActual = null;
+    }
+
+    function renderStepper(e) {
+      const steps = [
+        ['Formulario', true],
+        ['Documentos', ['REVISION_DOCUMENTAL_OK', 'CONSULTAS_CARGADAS', 'RIESGO_CARGADO', 'ESCALADO_OFICIAL', 'APROBADO'].includes(e.estadoProceso)],
+        ['Consultas', e.workflow?.consultasListas?.estado === 'CARGADAS'],
+        ['Riesgo', e.workflow?.calificacionRiesgo?.estado === 'CARGADA'],
+        ['Oficial', ['ESCALADO_OFICIAL', 'APROBADO', 'RECHAZADO'].includes(e.estadoProceso)],
+        ['Actualización', e.alertas?.estadoActualizacion === 'PROGRAMADA']
+      ];
+      document.getElementById('stepper').innerHTML = steps.map(([name, done], i) => {
+        const current = !done && i === steps.findIndex(s => !s[1]);
+        return `<div class="step ${done ? 'done' : current ? 'current' : ''}">${done ? '✓ ' : current ? '● ' : ''}${name}</div>`;
+      }).join('');
+    }
+
+    function showTab(tab, btn) {
+      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      if (!expedienteActual) {
+        document.getElementById('tabContent').innerHTML = 'Selecciona un expediente.';
+        return;
+      }
+
+      const e = expedienteActual;
+
+      const views = {
+        resumen: `
+          <h3>Resumen del expediente</h3>
+          <div class="detail-grid">
+            <div class="detail-box"><small>Radicado</small><strong>${e.radicado || '-'}</strong></div>
+            <div class="detail-box"><small>Tercero</small><strong>${e.nombreORazonSocial || '-'}</strong></div>
+            <div class="detail-box"><small>Identificación</small><strong>${e.tipoIdentificacion || ''} ${e.numeroIdentificacion || ''}</strong></div>
+            <div class="detail-box"><small>Correo</small><strong>${e.correo || '-'}</strong></div>
+            <div class="detail-box"><small>Estado proceso</small><strong>${e.estadoProceso || '-'}</strong></div>
+            <div class="detail-box"><small>Etapa actual</small><strong>${e.etapaActual || '-'}</strong></div>
+          </div>
+          <div class="actions">
+            <button class="secondary-btn" onclick="volverBandeja()">Volver a bandeja</button>
+            <button class="primary-btn" onclick="toast('Siguiente fase: acción asignar responsable conectada a Lambda.')">Asignar responsable</button>
+            <button class="secondary-btn" onclick="toast('Siguiente fase: asignar asistente.')">Asignar asistente</button>
+            <button class="secondary-btn" onclick="toast('Siguiente fase: marcar revisión documental OK.')">Revisión documental OK</button>
+            <button class="secondary-btn" onclick="toast('Siguiente fase: escalar al Oficial.')">Escalar Oficial</button>
+          </div>
+        `,
+        formulario: `<h3>Formulario diligenciado</h3><pre>${JSON.stringify(e.personaNatural || e.personaJuridica || e.formularioCompleto || {}, null, 2)}</pre>`,
+        documentos: `
+          <h3>Documentos soporte</h3>
+          <div class="doc-list">
+            ${(e.documentos || []).map(d => `<div class="doc-item"><span>📎 ${d.nombreOriginal || d.rutaS3 || 'Documento'}</span><button class="ghost-btn" onclick="toast('Siguiente fase: generar URL de descarga.')">Ver</button></div>`).join('') || '<p>Sin documentos registrados.</p>'}
+          </div>
+        `,
+        consultas: `<h3>Consultas en listas</h3><p>Estado: <strong>${e.workflow?.consultasListas?.estado || 'PENDIENTE'}</strong></p><div class="actions"><button class="primary-btn" onclick="toast('Siguiente fase: carga de consultas en listas.')">Cargar consultas</button></div>`,
+        riesgoTab: `<h3>Calificación de riesgo</h3><p>Nivel: <strong>${e.workflow?.calificacionRiesgo?.nivel || 'Pendiente'}</strong></p><div class="actions"><button class="primary-btn" onclick="toast('Siguiente fase: cargar PDF de calificación de riesgo.')">Cargar riesgo</button></div>`,
+        oficialTab: `
+          <h3>Decisión Oficial de Cumplimiento</h3>
+          <div class="detail-grid">
+            <div class="detail-box"><small>Decisión</small><strong>${e.workflow?.decisionOficial?.decision || 'Pendiente'}</strong></div>
+            <div class="detail-box"><small>Riesgo final</small><strong>${e.workflow?.decisionOficial?.nivelRiesgoFinal || 'Pendiente'}</strong></div>
+            <div class="detail-box"><small>Fecha aprobación</small><strong>${e.workflow?.decisionOficial?.fechaAprobacion || '-'}</strong></div>
+          </div>
+          <div class="actions">
+            <button class="primary-btn" onclick="toast('Siguiente fase: aprobar con fecha de actualización.')">Aprobar</button>
+            <button class="secondary-btn" onclick="toast('Siguiente fase: rechazar expediente.')">Rechazar</button>
+            <button class="secondary-btn" onclick="toast('Siguiente fase: solicitar DDI.')">Solicitar DDI</button>
+            <button class="secondary-btn" onclick="toast('Siguiente fase: devolver al funcionario.')">Devolver</button>
+          </div>
+        `,
+        actualizacionTab: `
+          <h3>Actualización documental</h3>
+          <div class="detail-grid">
+            <div class="detail-box"><small>Próxima actualización</small><strong>${e.alertas?.proximaActualizacion || 'No programada'}</strong></div>
+            <div class="detail-box"><small>Estado</small><strong>${e.alertas?.estadoActualizacion || 'NO_PROGRAMADA'}</strong></div>
+            <div class="detail-box"><small>Días antes alerta</small><strong>${e.alertas?.diasAntesAlerta || 30}</strong></div>
+          </div>
+        `,
+        historial: `<h3>Historial del proceso</h3><div class="activity">${(e.historialFlujo || []).map(h => `<div class="activity-item"><strong>${h.accion}</strong><span>${h.fecha || ''} · ${h.usuario || ''}<br>${h.observacion || ''}</span></div>`).join('') || 'Sin historial.'}</div>`
+      };
+
+      document.getElementById('tabContent').innerHTML = views[tab] || 'Sin información.';
+    }
+
+    function filtrarExpedientes() {
+
+      const texto = document
+        .getElementById("txtBuscar")
+        .value
+        .toUpperCase();
+
+      const estado = document
+        .getElementById("fEstado")
+        .value;
+
+      const tipo = document
+        .getElementById("fTipo")
+        .value;
+
+      const lista = expedientes.filter(e => {
+
+        const buscar = (
+
+          (e.radicado || "") +
+
+          (e.nombreORazonSocial || "") +
+
+          (e.numeroIdentificacion || "")
+
+        ).toUpperCase();
+
+        if (texto && !buscar.includes(texto))
+          return false;
+
+        if (estado && e.estadoProceso != estado)
+          return false;
+
+        if (tipo) {
+
+          if ((e.tipoContraparte || "") != tipo)
+            return false;
+
+        }
+
+        return true;
+
+      });
+
+      renderTablaFiltrada(lista);
+
+    }
+
+    function renderTablaFiltrada(lista) {
+
+      const tbody = document.getElementById("tablaExpedientesCompleta");
+
+      if (!lista.length) {
+
+        tbody.innerHTML = `<tr>
+
+        <td colspan="7">
+
+        No existen registros.
+
+        </td>
+
+        </tr>`;
+
+        return;
+
+      }
+
+      tbody.innerHTML = lista.map(item => `
+
+<tr>
+
+<td><strong>${item.radicado || ''}</strong></td>
+
+<td>${item.nombreORazonSocial || ''}</td>
+
+<td>${item.tipoIdentificacion || ''} ${item.numeroIdentificacion || ''}</td>
+
+<td>${item.tipoContraparte || ''}</td>
+
+<td>${badgeEstado(item.estadoProceso)}</td>
+
+<td>${item.responsables?.comercialAsignado?.nombre || '-'}</td>
+
+<td>
+
+<button
+class="primary-btn"
+onclick="abrirExpediente('${item.radicado}')">
+
+Abrir
+
+</button>
+
+</td>
+
+</tr>
+
+`).join('');
+
+    }
+
+    cargarContrapartes();
+  </script>
+</body>
+
+</html>
